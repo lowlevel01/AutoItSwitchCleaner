@@ -5,7 +5,7 @@ if len(sys.argv) < 2:
     sys.exit(0)
 
 file = open(sys.argv[1],"r").read().splitlines()
-result = open("deobf_loops.au3","a")
+result = open("result.au3","a")
 
 cache = ""
 insideSwitch = False
@@ -18,6 +18,7 @@ important_case = 0
 
 for num in range(len(file)):
     if num + 1 < len(file) and file[num] == "Do" and file[num+1].startswith("Switch "):
+        switch_counter += 1
         insideSwitch = True
         switch_index = num-2
         
@@ -44,6 +45,7 @@ for num in range(len(file)):
     if num + 1 < len(file) and file[num+1].startswith("Func "):
         result.write("\n#comments-start \n Start of a Function \n #comments-end \n")
     
-
+print("Found "+ str(switch_counter) + " statements")
+print("Final result is written to: result.au3")
 result.close()
     
