@@ -1,12 +1,11 @@
+import sys
 
+if len(sys.argv) < 2:
+    print("USAGE: python AutoItSwitchCleaner.py [FILENAME]")
+    sys.exit(0)
 
-
-
-
-file = open("deobfuscated_strings.au3","r").read().splitlines()
-
+file = open(sys.argv[1],"r").read().splitlines()
 result = open("deobf_loops.au3","a")
-
 
 cache = ""
 insideSwitch = False
@@ -16,6 +15,7 @@ end_index = 0
 foundEndLoop = False
 last_case = 0
 important_case = 0
+
 for num in range(len(file)):
     if num + 1 < len(file) and file[num] == "Do" and file[num+1].startswith("Switch "):
         insideSwitch = True
